@@ -1,5 +1,5 @@
 # Machine_learning_project
-For ruunig the code you need to run main.py file. This file uses one of the class written by me. This class is located in \ML_FAB_Classes\NN_Prep.py. 
+For runnig the code you need to run main.py file. This file uses one of the class written by me. This class is located in \ML_FAB_Classes\NN_Prep.py. 
 The class does neural network training. 
 The main.py is made of 5 parts which each part is elaborated hereafter
 
