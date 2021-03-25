@@ -10,11 +10,10 @@ import random
 from matplotlib import pyplot as plt
 import seaborn as sns
 from ML_FAB_Classes.NN_Prep import MLPNN_Regression
-from ML_FAB_Classes.preprocess import Preprocessing
 from scipy.io import loadmat
 import pyxdf
 from sklearn.preprocessing import MinMaxScaler
-
+import os
 """Part 2:load the data object
 This section loads the data from an xdf file and coverts it to a panda data frame format
 """
@@ -120,8 +119,10 @@ This section trains the neural networks and get the trained model
 """
 
 testclass = MLPNN_Regression(scaled_data,scaled_labels)
-model = testclass.train_test(test_size=0.2,n_epochs=7,hidden_dimensions=20,batch_size=8,lr=0.02)
+model = testclass.train_test(test_size=0.2,n_epochs=2,hidden_dimensions=20,batch_size=8,lr=0.02)
 
+PATH= "modelnn.pt"
+torch.save(model.state_dict(),PATH)
 """Part 6: Results and plots
 This section shows how much error the model has based on all available data ( which includes the train and test data)
 It also plots the labels of all available data and compare it with predicted labels come from the trained model
