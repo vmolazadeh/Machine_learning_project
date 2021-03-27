@@ -40,7 +40,7 @@ class MLPNN_Regression:
             self.output_layer = nn.Linear(hidden_dimension,n_classes)
             
           
-            self.relu = nn.Sigmoid()
+            self.relu = nn.ReLU()
        
     
     
@@ -50,26 +50,29 @@ class MLPNN_Regression:
             batch = self.input_layer(batch)
             
             batch = self.relu(batch)
-      
+            batch -= batch.min(1, keepdim=True)[0]
+            batch /= batch.max(1, keepdim=True)[0]
             ## put the transformed data into the first hidden layer of the neural network
             batch = self.layer1(batch)
             
             ## apply the ReLU function to the output of the 1st hidden layer
             batch = self.relu(batch)
-            
+            batch -= batch.min(1, keepdim=True)[0]
+            batch /= batch.max(1, keepdim=True)[0]
             ## put the transformed data into the second hidden layer of the neural network
             batch = self.layer2(batch)
             
             
             ## apply the ReLU function to the output of the 1st hidden layer
             batch = self.relu(batch)
-            
+            batch -= batch.min(1, keepdim=True)[0]
+            batch /= batch.max(1, keepdim=True)[0]
             ## put the transformed data into the output layer of the neural network
             batch = self.output_layer(batch)
             
             ### return the probability distribution via the softmax function
             #return nn.functional.softmax(batch)
-            return batch
+            return nn.functional.tanh(batch)
     
 
         
