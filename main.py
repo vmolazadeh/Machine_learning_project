@@ -119,7 +119,7 @@ This section trains the neural networks and get the trained model
 """
 
 testclass = MLPNN_Regression(scaled_data,scaled_labels)
-model = testclass.train_test(test_size=0.2,n_epochs=2,hidden_dimensions=20,batch_size=8,lr=0.02)
+model = testclass.train_test(test_size=0.2,n_epochs=3,hidden_dimensions=20,batch_size=8,lr=0.02)
 
 PATH= "modelnn.pt"
 torch.save(model.state_dict(),PATH)
