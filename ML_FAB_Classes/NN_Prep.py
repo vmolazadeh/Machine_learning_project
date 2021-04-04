@@ -101,10 +101,11 @@ class MLPNN_Regression:
         
         
         ''' This loop moves through the data once for each epoch'''
+        correct = 1
         for i in range(n_epochs):
             
             ### track the number we get correct
-            correct = 0
+
             
             ''' This loop moves through each batch and feeds into the neural network'''
             for ii in range(len(train_batches)):
@@ -161,7 +162,8 @@ class MLPNN_Regression:
                 
                 pred=predictions.data.detach().numpy()  
                 error_p=np.sum(abs((labels- pred)))/len(pred)
-                correct = 1-error_p
+                correct += 1 - error_p
+                correct /= 2
                     #display(correct)
                       
          

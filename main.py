@@ -49,6 +49,11 @@ out1_ready = np.delete(out1, [0,4,6,7], axis=1)
 panda_data0=pd.DataFrame(out0_ready,columns=["Joint Angle","Torque","Force sensor","State number"])
 panda_data1=pd.DataFrame(out1_ready,columns=["Joint Angle","Torque","Force sensor","State number"])
 
+
+num_row=len(panda_data0)
+velocity=np.diff(panda_data0['Joint Angle'].values)/0.01
+velocity=np.append(velocity,[velocity[int(num_row-2)]])
+panda_data0['velocity']=velocity
 """Part 3:data initialization
 This section removes noises from the data and also does hot encoder operation on the discreet features 
 """
@@ -105,7 +110,7 @@ panda_data1 = panda_data1.drop(['State number'], 1)
 #sns.pairplot(panda_data0,vars=["Joint Angle","Force sensor",10,11,12,13,14],hue="Torque",height=1,aspect=1)
 #plt.show()
 
-data=panda_data0[["Joint Angle","Torque","Force sensor",10,11,12,13,14]]
+data=panda_data0[["Joint Angle","velocity","Force sensor",10,11,12,13,14]]
 labels=panda_data0[["Torque"]]
 """Part 4: Normalization for ML
 This section normalizes both the features and continuous labels  
@@ -119,7 +124,7 @@ This section trains the neural networks and get the trained model
 """
 
 testclass = MLPNN_Regression(scaled_data,scaled_labels)
-model = testclass.train_test(test_size=0.2,n_epochs=3,hidden_dimensions=20,batch_size=8,lr=0.02)
+model = testclass.train_test(test_size=0.2,n_epochs=15,hidden_dimensions=20,batch_size=8,lr=0.005)
 
 PATH= "modelnn.pt"
 torch.save(model.state_dict(),PATH)
